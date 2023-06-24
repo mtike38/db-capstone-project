@@ -57,7 +57,7 @@ DELIMITER //
 CREATE PROCEDURE CancelOrder(IN order_id INT)
 BEGIN
 	SELECT CONCAT("Order ", OrderID, " is cancelled") AS "Confirmation"
-	FROM Orders WHERE OrderID = id;
+	FROM Orders WHERE OrderID = order_id;
     
 	DELETE FROM Orders WHERE OrderID = order_id;
 END //
@@ -118,6 +118,7 @@ IF @duplicate > 1
     SELECT CONCAT("Table ", table_no, " is already booked - booking cancelled") AS "Booking Status";
 ELSE
 	COMMIT;
+    SELECT "Booking done" AS "Booking Status";
 END IF;
 
 END //
@@ -143,7 +144,7 @@ CREATE PROCEDURE UpdateBooking(IN booking_id INT, IN booking_date DATE)
 BEGIN
 UPDATE `littlelemondb`.`bookings` SET BookingDate = booking_date WHERE BookingID = booking_id;
 
-SELECT CONCAT("Booking ", booking_id, "updated") AS "Confirmation";
+SELECT CONCAT("Booking ", booking_id, " updated") AS "Confirmation";
 END //
 DELIMITER ;
 
@@ -154,7 +155,7 @@ DELIMITER ;
  CREATE PROCEDURE CancelBooking(IN booking_id INT)
  BEGIN
  DELETE FROM `littlelemondb`.`bookings` WHERE BookingID = booking_id;
-SELECT CONCAT("Booking ", booking_id, "cancelled") AS "Confirmation";
+SELECT CONCAT("Booking ", booking_id, " cancelled") AS "Confirmation";
 END //
 DELIMITER ;
 
